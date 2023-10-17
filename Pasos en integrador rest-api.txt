@@ -1,13 +1,18 @@
-1. instalar atraves de git bash las dependencias que se ocuparan en el proyecto.
+1. instalar a través de git bash las dependencias que se ocuparan en el proyecto.
 2.Creamos la base de datos, tanto el database.js como en Mysql.
 3.agregar index.js en src, que se encargara de inicializar nuestro servicio que proporcionaremos en api-rest.
-4.Agregar al package.json el codigo "type": "module", debajo de name. Cambia la aconfiguracion de nuestro package.json para utilizar import.
+4.Agregar al package.json el codigo "type": "module", debajo de name. Cambia la configuración de nuestro package.json para utilizar import.
 5.Ponemos en consola el comando "node src/index.js", lo que se realizara es inicializar el servicio.
 
 Consultar por un dato ya registrado en la base de datos
 6.Colar un registro en la base de datos
 7.Crear el archivo controller.js en src
-8.Crear el archivo routes.js, que va a definir las rutas para accesos a aquellos metodos
+8.Crear el archivo routes.js, que va a definir las rutas para accesos a aquellos métodos.
+
 9.En la consola activar el servidor con el comando "node src/index.js"
-10.Con el paquete nodemon reejecutara el servidor y se actualizara automaticamente, para eso tenemos que colar en el package.json en la parte
-scripts el siguiente codigo: "dev": "nodemon src/index.js",
+10.Con el paquete nodemon re ejecutara el servidor y se actualizara automáticamente, para eso tenemos que colar en el package.json en la parte
+scripts el siguiente código: "dev": "nodemon src/index.js",
+
+11.Creacion de las distintas funciones en el controller(add, delete, update y getOne).
+12.asignar las rutas para las solicitudes de los servicios.
+13.Verificacion de cada acción con postman.
