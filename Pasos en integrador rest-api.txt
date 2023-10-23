@@ -1,3 +1,4 @@
+-----Ejecicio 1-----
 1. instalar a través de git bash las dependencias que se ocuparan en el proyecto.
 2.Creamos la base de datos, tanto el database.js como en Mysql.
 3.agregar index.js en src, que se encargara de inicializar nuestro servicio que proporcionaremos en api-rest.
@@ -16,3 +17,8 @@ scripts el siguiente código: "dev": "nodemon src/index.js",
 11.Creacion de las distintas funciones en el controller(add, delete, update y getOne).
 12.asignar las rutas para las solicitudes de los servicios.
 13.Verificacion de cada acción con postman.
+
+-----Ejecicio 2-----
+c. Eliminar un libro proporcionando su ISBN.
+1.Tenemos un metodo de eliminar en la class libroController, que elimna un libro atraves de id del libro, copiamos este metodo
+2.Lo modificamos para que la eliminacion de un libro lo pueda hacer atra ves del ISBN
