@@ -11,17 +11,23 @@ class libroController{
 
     //Creacion de datos
     async add(req, res){
+        try{
         const libro = req.body;//Recibir los datos que coloque el cliente en el body y guardarlo en la constante
         const [result] = await pool.query(`INSERT INTO libros(nombre, autor, categoria, añopublicacion, isbn) VALUES (?, ?, ?, ?, ?)`, [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.isbn]);
         res.json({"Id insertado": result.insertId});
+    }catch(error){
+        console.error(error);
+        res.status(500).json({error: 'Hubo un error al añadir el libro, compruebe los campos requeridos.'});
+    }
     }
 
-    async delete(req, res){
-        const libro = req.body;
-        const [result] = await pool.query(`DELETE FROM libros WHERE id=(?)`, [libro.id]);
-        res.json({"Registros eliminados": result.affectedRows});
-    }
+    // async delete(req, res){
+    //     const libro = req.body;
+    //     const [result] = await pool.query(`DELETE FROM libros WHERE id=(?)`, [libro.id]);
+    //     res.json({"Registros eliminados": result.affectedRows});
+    // }
 
+    //ELiminar mediante isbn
     async delete(req, res){
         const libro = req.body;
         const [result] = await pool.query(`DELETE FROM libros WHERE isbn=(?)`, [libro.isbn]);
@@ -34,12 +40,22 @@ class libroController{
         console.log(e);
     }
 
+    //Actualizar libro
     async update(req, res){
+        try{
         const libro = req.body;
         const [result] = await pool.query(`UPDATE libros SET nombre=(?), autor=(?), categoria=(?), añopublicacion=(?), isbn=(?) WHERE id=(?)`, [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.isbn, libro.id]);
+        if(result.changedRows === 0){
+            throw new Error('No se encontró un libro con el ID proporcionado o los datos proporcionados ya existen.')
+        }
         res.json({"Registros actualizados": result.changedRows});
+    }catch(error){
+        console.error(error);
+            res.status(500).json({ error: 'Hubo un error al actualizar el libro, compruebe los campos requeridos.' });
+    }
     }
 
+    //Consultar libro por id
     async getOne(req, res){
         const libro = req.body;
         const id = parseInt(libro.id);
