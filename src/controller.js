@@ -5,8 +5,29 @@ class libroController{
     //Traer los datos de la base de datos
     //async y await nos brindan que nuestas cosnultas sean asincronas 
     async getAll(req, res){
+        try{
         const [result] = await pool.query('SELECT * FROM libros');
         res.json(result);//Enviar nuestra respuesta en json al cliente
+    }catch(error){
+        res.status(500).json({"Error": "Ocurrio un erro al cargar los libros."});
+    }
+    }
+
+    //Consultar libro por id
+    async getOne(req, res){
+        try{
+            const libro = req.body;
+            const id = parseInt(libro.id);
+            const [result] =  await pool.query(`SELECT * FROM libros WHERE id=(?)`, [id]);
+        if( result[0] != undefined){
+            res.json(result);
+        }else{
+            res.json({"Error": "No se a encontrado un libro con el id especifico"});
+        }
+    }catch(e){
+        console.log(e);
+        res.status(500).json({"Error": "Ocurrio un erro al buscar el libro."});
+    }
     }
 
     //Creacion de datos
@@ -17,27 +38,39 @@ class libroController{
         res.json({"Id insertado": result.insertId});
     }catch(error){
         console.error(error);
-        res.status(500).json({error: 'Hubo un error al añadir el libro, compruebe los campos requeridos.'});
+        res.status(500).json({"Error": "Hubo un error al añadir el libro, compruebe los campos requeridos."});
     }
     }
-
-    // async delete(req, res){
-    //     const libro = req.body;
-    //     const [result] = await pool.query(`DELETE FROM libros WHERE id=(?)`, [libro.id]);
-    //     res.json({"Registros eliminados": result.affectedRows});
-    // }
 
     //ELiminar mediante isbn
-    async delete(req, res){
+    async deleteISBN(req, res){
+        try{
         const libro = req.body;
         const [result] = await pool.query(`DELETE FROM libros WHERE isbn=(?)`, [libro.isbn]);
-        if( result[0] != undefined){
-        res.json({"Registros eliminados": result.affectedRows});
+        if(result.affectedRows > 0){
+        res.json({"Registros eliminado": result.affectedRows});
         }else{
-            res.json({"Error": "No se a encontrado un libro con el isbn especifico"});
+            res.status(404).json({"Error": `No se ecnotró ningún libro con el ISBN ${libro.isbn}`})
         }
     }catch(e){
         console.log(e);
+        res.status(500).json({"Error": "Ocurrio un error al eliminar el libro"});
+    }
+    }
+
+    //Eliminar mediante id
+    async deleteID(req, res){
+        try{
+        const libro = req.body;
+        const [result] = await pool.query(`DELETE FROM libros WHERE id=(?)`, [libro.id]);
+        if(result.affectedRows > 0){
+            res.json({"Registros eliminado": result.affectedRows});
+        }else{
+            res.status(404).json({"Error": `No se ecnotró ningún libro con el id ${libro.id}`})
+        }
+    }catch(error){
+        res.status(500).json({"Error": "Ocurrio un error al eliminar el libro"});
+    }
     }
 
     //Actualizar libro
@@ -51,22 +84,8 @@ class libroController{
         res.json({"Registros actualizados": result.changedRows});
     }catch(error){
         console.error(error);
-            res.status(500).json({ error: 'Hubo un error al actualizar el libro, compruebe los campos requeridos.' });
+            res.status(500).json({"Error": 'Hubo un error al actualizar el libro, compruebe los campos requeridos.' });
     }
-    }
-
-    //Consultar libro por id
-    async getOne(req, res){
-        const libro = req.body;
-        const id = parseInt(libro.id);
-        const [result] =  await pool.query(`SELECT * FROM libros WHERE id=(?)`, [id]);
-        if( result[0] != undefined){
-            res.json(result);
-        }else{
-            res.json({"Error": "No se a encontrado un libro con el id especifico"});
-        }
-    }catch(e){
-        console.log(e);
     }
 }
 
