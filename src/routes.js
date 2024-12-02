@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { libro } from './controller.js';//la constante del contrallador
+import { libro } from './controller/LibroController.js';//la constante del contrallador
 
 export const router = Router();
 

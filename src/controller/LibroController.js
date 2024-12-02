@@ -1,5 +1,5 @@
 //Usuamos un pool para generar un pool de conexiones paralelas
-import {pool} from './database.js';
+import {pool} from '../data/database.js'
 
 class libroController{
 

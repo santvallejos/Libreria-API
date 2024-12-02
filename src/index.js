@@ -1,12 +1,10 @@
 //Elementos importados
+import cors from 'cors';
 import express from 'express';//Servidor de la api-rest
 import morgan from 'morgan';//Mostrar por consola las solicitudes los clientes
 import { router } from './routes.js';
 
-//Creacion del servidor
 const app = express();
-const cors = require('cors');
-const express = require('express');
 
 //Puerto
 app.set('port', 3000);
