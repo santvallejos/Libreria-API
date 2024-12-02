@@ -18,10 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `rest-api`
+-- Base de datos: `libreria_api`
 --
-CREATE DATABASE IF NOT EXISTS `rest-api` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `rest-api`;
+CREATE DATABASE IF NOT EXISTS `libreria_api` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `libreria_api`;
 
 -- --------------------------------------------------------
 

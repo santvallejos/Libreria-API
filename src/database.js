@@ -4,7 +4,7 @@ const properties = {
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'rest-api'
+    database: 'libreria_api'
 };
 
 export const pool = myslConnection.createPool(properties);
