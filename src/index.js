@@ -5,11 +5,14 @@ import { router } from './routes.js';
 
 //Creacion del servidor
 const app = express();
+const cors = require('cors');
+const express = require('express');
 
 //Puerto
 app.set('port', 3000);
 
 app.use(morgan('dev'));//Solicitudes de los clientes
+app.use(cors());
 app.use(express.json());//Interpretar los datos que se envian
 app.use(router);
 
