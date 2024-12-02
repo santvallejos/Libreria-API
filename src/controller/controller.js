@@ -9,9 +9,9 @@ class libroController{
         //query a la base de datos
         const [result] = await pool.query('SELECT * FROM libros');
         res.json(result);//Enviar nuestra respuesta en json al cliente
-    }catch(error){
-        res.status(500).json({"Error": "Ocurrio un erro al cargar los libros."});
-    }
+        }catch(error){
+            res.status(500).json({"Error": "Ocurrio un erro al cargar los libros."});
+        }
     }
 
     //GET{id}
@@ -37,12 +37,12 @@ class libroController{
         try{
         const libro = req.body;//Recibir los datos que coloque el cliente en el body y guardarlo en la constante
         //query a la base de datos
-        const [result] = await pool.query(`INSERT INTO libros(nombre, autor, categoria, añopublicacion, isbn) VALUES (?, ?, ?, ?, ?)`, [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.isbn]);
+        const [result] = await pool.query(`INSERT INTO libros(nombre, autor, categoria, url,añopublicacion, isbn) VALUES (?, ?, ?, ?, ?, ?)`, [libro.nombre, libro.autor, libro.categoria, libro.url,libro.añopublicacion, libro.isbn]);
         res.json({"Id insertado": result.insertId});
-    }catch(error){
-        console.error(error);
-        res.status(500).json({"Error": "Hubo un error al añadir el libro, compruebe los campos requeridos."});
-    }
+        }catch(error){
+            console.error(error);
+            res.status(500).json({"Error": "Hubo un error al añadir el libro, compruebe los campos requeridos."});
+        }
     }
 
     //DELETE{ISBN}
@@ -56,10 +56,10 @@ class libroController{
         }else{
             res.status(404).json({"Error": `No se ecnotró ningún libro con el ISBN ${libro.isbn}`})
         }
-    }catch(e){
-        console.log(e);
-        res.status(500).json({"Error": "Ocurrio un error al eliminar el libro"});
-    }
+        }catch(e){
+            console.log(e);
+            res.status(500).json({"Error": "Ocurrio un error al eliminar el libro"});
+        }
     }
 
     //DELETE{id}
@@ -88,10 +88,10 @@ class libroController{
             throw new Error('No se encontró un libro con el ID proporcionado o los datos proporcionados ya existen.')
         }
         res.json({"Registros actualizados": result.changedRows});
-    }catch(error){
-        console.error(error);
-            res.status(500).json({"Error": 'Hubo un error al actualizar el libro, compruebe los campos requeridos.' });
-    }
+        }catch(error){
+            console.error(error);
+                res.status(500).json({"Error": 'Hubo un error al actualizar el libro, compruebe los campos requeridos.' });
+        }
     }
 }
 
