@@ -1,7 +1,7 @@
 //Usuamos un pool para generar un pool de conexiones paralelas
 import {pool} from '../data/database.js'
 
-class libroController{
+class BookController{
 
     //GET
     async getAll(req, res){
@@ -17,8 +17,8 @@ class libroController{
     //GET{id}
     async getOne(req, res){
         try{
-            const libro = req.body;
-            const id = parseInt(libro.id);
+            const book = req.body;
+            const id = parseInt(book.id);
             //query a la base de datos
             const [result] =  await pool.query(`SELECT * FROM libros WHERE id=(?)`, [id]);
         if( result[0] != undefined){
@@ -35,9 +35,9 @@ class libroController{
     //POST
     async add(req, res){
         try{
-        const libro = req.body;//Recibir los datos que coloque el cliente en el body y guardarlo en la constante
+        const book = req.body;//Recibir los datos que coloque el cliente en el body y guardarlo en la constante
         //query a la base de datos
-        const [result] = await pool.query(`INSERT INTO libros(nombre, autor, categoria, url,añopublicacion, isbn) VALUES (?, ?, ?, ?, ?, ?)`, [libro.nombre, libro.autor, libro.categoria, libro.url,libro.añopublicacion, libro.isbn]);
+        const [result] = await pool.query(`INSERT INTO libros(nombre, autor, categoria, url,añopublicacion, isbn) VALUES (?, ?, ?, ?, ?, ?)`, [book.nombre, book.autor, book.categoria, book.url,book.añopublicacion, book.isbn]);
         res.json({"Id insertado": result.insertId});
         }catch(error){
             console.error(error);
@@ -48,13 +48,13 @@ class libroController{
     //DELETE{ISBN}
     async deleteISBN(req, res){
         try{
-        const libro = req.body;
+        const book = req.body;
         //query a la base de datos
-        const [result] = await pool.query(`DELETE FROM libros WHERE isbn=(?)`, [libro.isbn]);
+        const [result] = await pool.query(`DELETE FROM libros WHERE isbn=(?)`, [book.isbn]);
         if(result.affectedRows > 0){
         res.json({"Registros eliminado": result.affectedRows});
         }else{
-            res.status(404).json({"Error": `No se ecnotró ningún libro con el ISBN ${libro.isbn}`})
+            res.status(404).json({"Error": `No se ecnotró ningún libro con el ISBN ${book.isbn}`})
         }
         }catch(e){
             console.log(e);
@@ -65,13 +65,13 @@ class libroController{
     //DELETE{id}
     async deleteID(req, res){
         try{
-        const libro = req.body;
+        const book = req.body;
         //query a la base de datos
-        const [result] = await pool.query(`DELETE FROM libros WHERE id=(?)`, [libro.id]);
+        const [result] = await pool.query(`DELETE FROM libros WHERE id=(?)`, [book.id]);
         if(result.affectedRows > 0){
             res.json({"Registros eliminado": result.affectedRows});
         }else{
-            res.status(404).json({"Error": `No se ecnotró ningún libro con el id ${libro.id}`})
+            res.status(404).json({"Error": `No se ecnotró ningún libro con el id ${book.id}`})
         }
     }catch(error){
         res.status(500).json({"Error": "Ocurrio un error al eliminar el libro"});
@@ -81,9 +81,9 @@ class libroController{
     //PUT
     async update(req, res){
         try{
-        const libro = req.body;
+        const book = req.body;
         //query a la base de datos
-        const [result] = await pool.query(`UPDATE libros SET nombre=(?), autor=(?), categoria=(?), añopublicacion=(?), isbn=(?) WHERE id=(?)`, [libro.nombre, libro.autor, libro.categoria, libro.añopublicacion, libro.isbn, libro.id]);
+        const [result] = await pool.query(`UPDATE libros SET nombre=(?), autor=(?), categoria=(?), url=(?),añopublicacion=(?), isbn=(?) WHERE id=(?)`, [book.nombre, book.autor, book.categoria, book.url,book.añopublicacion, book.isbn, book.id]);
         if(result.changedRows === 0){
             throw new Error('No se encontró un libro con el ID proporcionado o los datos proporcionados ya existen.')
         }
@@ -96,4 +96,4 @@ class libroController{
 }
 
 //Exportar el controllador
-export const libro = new libroController();
+export const book = new BookController();

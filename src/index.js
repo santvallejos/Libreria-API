@@ -1,5 +1,5 @@
 //Elementos importados
-import cors from 'cors';
+import cors from 'cors';//Importar cors para su implementacion en el front sin declarar variables
 import express from 'express';//Servidor de la api-rest
 import morgan from 'morgan';//Mostrar por consola las solicitudes los clientes
 import { router } from './routes.js';
