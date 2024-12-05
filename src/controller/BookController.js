@@ -37,7 +37,7 @@ class BookController{
         try{
         const book = req.body;//Recibir los datos que coloque el cliente en el body y guardarlo en la constante
         //query a la base de datos
-        const [result] = await pool.query(`INSERT INTO libros(nombre, autor, categoria, url,añopublicacion, isbn) VALUES (?, ?, ?, ?, ?, ?)`, [book.nombre, book.autor, book.categoria, book.url,book.añopublicacion, book.isbn]);
+        const [result] = await pool.query(`INSERT INTO libros(nombre, autor, categoria, url, publicacion, isbn) VALUES (?, ?, ?, ?, ?, ?)`, [book.nombre, book.autor, book.categoria, book.url,book.publicacion, book.isbn]);
         res.json({"Id insertado": result.insertId});
         }catch(error){
             console.error(error);
@@ -83,7 +83,7 @@ class BookController{
         try{
         const book = req.body;
         //query a la base de datos
-        const [result] = await pool.query(`UPDATE libros SET nombre=(?), autor=(?), categoria=(?), url=(?),añopublicacion=(?), isbn=(?) WHERE id=(?)`, [book.nombre, book.autor, book.categoria, book.url,book.añopublicacion, book.isbn, book.id]);
+        const [result] = await pool.query(`UPDATE libros SET nombre=(?), autor=(?), categoria=(?), url=(?), publicacion=(?), isbn=(?) WHERE id=(?)`, [book.nombre, book.autor, book.categoria, book.url,book.publicacion, book.isbn, book.id]);
         if(result.changedRows === 0){
             throw new Error('No se encontró un libro con el ID proporcionado o los datos proporcionados ya existen.')
         }
